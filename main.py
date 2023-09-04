@@ -1,31 +1,38 @@
 import json
-import tweepy
-import time
+import asyncio
+import logging
+from typing import Any
+from tweepy import Client
 
-# Loading JSONS
-credentials = json.load(open("credentials.json"))
-dictionary = json.load(open("dictionary.json"))
+logging.basicConfig(level=logging.INFO)
 
-
-counter = 0
-
-# Loading API keys
-consumer_key = credentials["api_key"]
-consumer_secret = credentials["api_key_secret"]
-access_token = credentials["access_token"]
-access_token_secret = credentials["access_token_secret"]
-bearer_token = credentials["bearer_token"]
-
-# Creating client with necessary tokens
-client = tweepy.Client(bearer_token=bearer_token, consumer_key=consumer_key, consumer_secret=consumer_secret, access_token=access_token, access_token_secret=access_token_secret)
-
-while counter < len(dictionary):
-    message = "I am " + dictionary[counter]
+async def tweet_word(client: Client, dictionary: list[str], counter: int) -> None:
+    """Tweet a word from the dictionary."""
     try:
-        client.create_tweet(text=message)
-    except tweepy.TweepError as e:
-        print("Erreur lors de l'envoi du tweet :", e)
-        time.sleep(60)  # Wait 1 minute before trying again
+        word = dictionary[counter]
+        logging.info(f"Tweeting the word: {word}")
+        # Assume tweet() is an async method
+        await client.tweet(word)
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
 
-    counter +=1
-    time.sleep(30*60)  # Wait 30 minutes before sending the next tweet
+async def main():
+    credentials = json.load(open("credentials.json"))
+    dictionary = json.load(open("dictionary.json"))
+    counter = 0
+
+    client = Client(
+        bearer_token=credentials["bearer_token"],
+        consumer_key=credentials["api_key"],
+        consumer_secret=credentials["api_key_secret"],
+        access_token=credentials["access_token"],
+        access_token_secret=credentials["access_token_secret"],
+    )
+
+    while True:
+        await tweet_word(client, dictionary, counter)
+        counter = (counter + 1) % len(dictionary)
+        await asyncio.sleep(60)  # Sleep for 60 seconds
+
+if __name__ == '__main__':
+    asyncio.run(main())
