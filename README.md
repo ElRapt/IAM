@@ -1,4 +1,4 @@
-# Asynchronous Twitter Bot: "I am"
+# "I am" : Twitter bot
 
 ## Introduction
 
@@ -34,11 +34,13 @@ This Twitter bot is designed to periodically tweet phrases that begin with "I am
 
 ## Usage
 
-1. Update the `credentials.json` with your Twitter API credentials.
-  
-2. Update the `dictionary.json` with the list of words you'd like to tweet.
+1. Create a Twitter Application on [Twitter's Developer Portal](https://developer.twitter.com/en)
 
-3. Run the bot:
+2. Create a `credentials.json` with your Twitter API credentials.
+  
+3. Update the `dictionary.json` with the list of words you'd like to tweet.
+
+4. Run the bot:
     ```bash
     python main.py
     ```
