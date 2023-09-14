@@ -1,5 +1,12 @@
 # "I am" : Twitter bot
 
+
+![GitHub](https://img.shields.io/github/license/ElRapt/globalslowmode)
+![Language](https://img.shields.io/badge/Language-Python-blue)
+![Twitter](https://img.shields.io/badge/Twitter-Bot-cyan)
+![Library](https://img.shields.io/badge/Library-tweepy-yellow)
+![Size](https://img.shields.io/badge/Size-1MB-lime)
+
 ## Introduction
 
 This Twitter bot is designed to periodically tweet phrases that begin with "I am" followed by a word from a predefined dictionary. The bot is implemented in Python and uses the Tweepy library for interacting with the Twitter API. It leverages Python's `asyncio` library for efficient IO-bound operations and incorporates best practices like logging, error handling, and thread safety.
